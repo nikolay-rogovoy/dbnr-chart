@@ -1,15 +1,14 @@
-import {AfterViewChecked, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SVGCharts} from './svg-charts';
-import {IChartData} from "./i-chart-data";
-import {FormControl} from "@angular/forms";
+import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
+import {SVGCharts} from '../svg-charts';
+import {IChartData} from '../i-chart-data';
 
 @Component({
-  moduleId: module.id,
-  selector: 'dbnr-chart',
-  styleUrls: ['dbnr-chart.css'],
-  templateUrl: 'dbnr-chart.html'
+    moduleId: module.id,
+    selector: 'pie-chart-component',
+    styleUrls: ['pie-chart-component.css'],
+    templateUrl: 'pie-chart-component.html'
 })
-export class DbnrChart implements  OnInit, AfterViewChecked {
+export class PieChartComponent implements  OnInit, AfterViewChecked {
 
     @Input()
     data: Array<IChartData> = [];

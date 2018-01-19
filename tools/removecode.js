@@ -1,21 +1,28 @@
 const del = require('del');
 var rimraf = require('rimraf');
 var fs = require('fs');
+var ncp = require('ncp').ncp;
 
+ncp.limit = 16;
 
 (function copy() {
     let path = './dist/tmp/lib-inlined/';
-    fs.readdir(path, (err, files) => {
-        files.forEach(file => {
-            fs.createReadStream(path + file).pipe(fs.createWriteStream('./dist/' + file));
-        });
+    let destination = './dist/';
+    ncp(path, destination, function (err) {
+        if (err) {
+            return console.error(err);
+        }
+        del(['dist/*ngfactory.js'])
+            .then(del(['dist/node_modules']))
+            .then(del(['dist/tmp']))
+            .then(del(['dist/*ngsummary.json']))
+            .then(del(['dist/*ngfactory.js.map']))
+            .then(del(['dist/*ngfactory.d.ts']))
+            .then(paths => {
+                console.log('Files and folders that would be deleted:\n', paths.join('\n'));
+            });
     });
 })();
-
-del(['dist/!(*.js.map|*.js|*.umd.js|*.esm.js|*.d.ts|*.umd.js.map|*.esm.js.map|package.json|*.metadata.json)']).then(paths => {
-    console.log('Files and folders that would be deleted:\n', paths.join('\n'));
-});
-
-(function main(){
-  //rimraf.sync('dist/node_modules')
+(function main() {
+    //rimraf.sync('dist/node_modules')
 })();

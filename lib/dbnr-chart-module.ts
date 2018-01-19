@@ -1,21 +1,25 @@
 import {NgModule}      from '@angular/core';
-
-import {DbnrChart} from './dbnr-chart';
 import {SafeHtml} from './safe-html'
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {PieChartComponent} from './pie-chart-component/pie-chart-component';
+import {HorizontalChartComponent} from './horizontal-chart-component/horizontal-chart-component';
+import {FunnelChartComponent} from './funnel-chart-component/funnel-chart-component';
 
 @NgModule({
-    imports:
-        [
-            CommonModule, // Критические провайдеры, NgIf и NgFor
-            FormsModule
-        ],
+    imports: [
+        CommonModule, // Критические провайдеры, NgIf и NgFor
+        FormsModule
+    ],
     exports: [
-        DbnrChart
+        PieChartComponent,
+        HorizontalChartComponent,
+        FunnelChartComponent
     ],
     declarations: [
-        DbnrChart,
+        PieChartComponent,
+        HorizontalChartComponent,
+        FunnelChartComponent,
         SafeHtml
     ]
 })
