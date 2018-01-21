@@ -13,40 +13,39 @@ export class PieChartComponent implements  OnInit, AfterViewChecked {
     @Input()
     data: Array<IChartData> = [];
 
+
+    @Input()
+    set roller(value){
+        this.charts = new SVGCharts('good', value);
+    };
+
     /***/
-    charts: SVGCharts = new SVGCharts('good');
+    charts: SVGCharts = new SVGCharts('good', 0);
 
     /** */
     get total () { return this.charts.getTotalSum(this.data); }
 
     textOffset = 24;
 
-    maxX = 300;
-    maxY = 300;
-    outerRadius = (this.maxX - this.textOffset * 2) / 2;
-    innerRadius = 33 * this.outerRadius / 100;
+    @Input()
+    width = 300;
 
-    get cx () { return this.maxX / 2; }
-    get cy () { return this.maxY / 2; }
+    @Input()
+    height = 300;
 
-    rx = this.outerRadius;
-    ry = this.outerRadius;
 
-    sx = this.cx + this.outerRadius;
-    sy = this.cy;
+    get cx () { return this.width / 2; }
+    get cy () { return this.height / 2; }
 
-    ex = 0;
-    ey = 0;
+    get outerRadius() {
+        return (this.width - this.textOffset * 2) / 2;
+    }
 
-    rxi = this.innerRadius;
-    ryi = this.innerRadius;
-    sxi = this.cx + this.innerRadius;
-    syi = this.cy;
+    get innerRadius() {
+        return 33 * this.outerRadius / 100;
+    }
 
-    exi = 0;
-    eyi = 0;
-
-    textHeight = 10;
+    textWidth = 9;
 
     /***/
     constructor() {
@@ -92,13 +91,13 @@ export class PieChartComponent implements  OnInit, AfterViewChecked {
     getTextX(i){
         let phi_text = this.phi_text(i);
         let tx = +(Math.cos(360 * phi_text * Math.PI / 180) * this.outerRadius * 0.7 + this.cx).toFixed(4);
-        return tx - this.textHeight * this.percents(i).toFixed(1).length / 2;
+        return tx - this.textWidth * this.percents(i).toFixed(1).length / 2;
     }
 
     /** Получение ординаты расположения очередного элемента текста */
     getTextY(i){
         let phi_text = this.phi_text(i);
-        let ty = this.maxY - +(Math.sin(360 * phi_text * Math.PI / 180) * this.outerRadius * 0.7 + this.cy).toFixed(4);
+        let ty = this.height - +(Math.sin(360 * phi_text * Math.PI / 180) * this.outerRadius * 0.7 + this.cy).toFixed(4);
         return ty;
     }
 
@@ -110,8 +109,6 @@ export class PieChartComponent implements  OnInit, AfterViewChecked {
 
     /** Получение многоугольника очередной части чарта */
     getPath(i){
-        let rx = this.rx;
-        let ry = this.ry;
         let rxi = this.innerRadius;
         let ryi = this.innerRadius;
 
@@ -119,23 +116,21 @@ export class PieChartComponent implements  OnInit, AfterViewChecked {
         let phi_prev = this.phi(i-1);
 
         let sx = +(Math.cos((360 * phi_prev) * Math.PI / 180) * this.outerRadius + this.cx).toFixed(4);
-        let sy = this.maxY - +(Math.sin((360 * phi_prev) * Math.PI / 180) * this.outerRadius + this.cy).toFixed(4);
+        let sy = this.height - +(Math.sin((360 * phi_prev) * Math.PI / 180) * this.outerRadius + this.cy).toFixed(4);
         let sxi = +(Math.cos((360 * phi_prev) * Math.PI / 180) * this.innerRadius + this.cx).toFixed(4);
-        let syi = this.maxY - +(Math.sin((360 * phi_prev) * Math.PI / 180) * this.innerRadius + this.cy).toFixed(4);     
+        let syi = this.height - +(Math.sin((360 * phi_prev) * Math.PI / 180) * this.innerRadius + this.cy).toFixed(4);
 
         let ex = +(Math.cos((360 * phi) * Math.PI / 180) * this.outerRadius + this.cx).toFixed(4);
-        let ey = this.maxY - +(Math.sin((360 * phi) * Math.PI / 180) * this.outerRadius + this.cy).toFixed(4);
+        let ey = this.height - +(Math.sin((360 * phi) * Math.PI / 180) * this.outerRadius + this.cy).toFixed(4);
         let exi = +(Math.cos((360 * phi) * Math.PI / 180) * this.innerRadius + this.cx).toFixed(4);
-        let eyi = this.maxY - +(Math.sin((360 * phi) * Math.PI / 180) * this.innerRadius + this.cy).toFixed(4);
+        let eyi = this.height - +(Math.sin((360 * phi) * Math.PI / 180) * this.innerRadius + this.cy).toFixed(4);
 
-        let res = 'M' + sx + ' ' + sy + ' A ' + rx + ' ' + ry + ', 0, 0, 0, ' + ex + ' ' + ey + 'L ' + exi + ' ' + eyi + ' A ' + rxi + ' ' + ryi + ', 0, 0, 1, ' + sxi + ' ' + syi + ' L ' + sx + ' ' + sy;
+        let res = 'M' + sx + ' ' + sy + ' A ' + this.outerRadius + ' ' + this.outerRadius + ', 0, 0, 0, ' + ex + ' ' + ey + 'L ' + exi + ' ' + eyi + ' A ' + rxi + ' ' + ryi + ', 0, 0, 1, ' + sxi + ' ' + syi + ' L ' + sx + ' ' + sy;
         return res;
     }
 
     /**Инит компонента*/
     ngOnInit() {
-        //document.querySelector('#my-div').innerHTML = this.getSVGData();
-        this.data = this.data.sort((a, b) => b.value - a.value);
     }
 
     /**После загрузки вьюхи*/

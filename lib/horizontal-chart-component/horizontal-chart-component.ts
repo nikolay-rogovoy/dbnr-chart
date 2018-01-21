@@ -12,13 +12,22 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
     @Input()
     data: Array<IChartData> = [];
 
+    @Input()
+    set roller(value){
+        this.charts = new SVGCharts('good', value);
+    };
+
     /***/
-    charts: SVGCharts = new SVGCharts('good');
+    charts: SVGCharts = new SVGCharts('good', 0);
 
     /** */
     get total() { return this.charts.getTotalSum(this.data); }
 
-    maxX = 300;
+    @Input()
+    width = 300;
+
+    @Input()
+    height = 300;
 
     barWidth = 30;
     spacer = 2;
@@ -31,6 +40,11 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
 
     /***/
     constructor() {
+    }
+
+    /***/
+    getText(i) {
+        return this.data[i].label + ", " + this.data[i].value;
     }
 
     /** Получение процентного соотношения очередного элемента */
@@ -55,8 +69,8 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
 
     /** Получение ширины прямоугольника */
     getWidth(i) {
-        let scale = (this.maxX - this.maxText) / ((this.maxX - this.maxText) * this.data[0].value / this.total);
-        let w = (this.maxX - this.maxText) * this.percents(i) / 100 * scale;
+        let scale = (this.width - this.maxText) / ((this.width - this.maxText) * this.data[0].value / this.total);
+        let w = (this.width - this.maxText) * this.percents(i) / 100 * scale;
         return w;
     }
 
@@ -84,24 +98,6 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
 
     /**Инит компонента*/
     ngOnInit() {
-        this.data = this.data.sort((a, b) => b.value - a.value);
-
-        let total = this.total;
-
-        for (let i = 0; i < this.data.length; i++) {
-            let item = this.data[i]; //данные в формате: [label, value]
-            let itemValue = +item.value;
-            let itemLabel = item.label;
-            if (itemLabel.length > this.maxText) {
-                this.maxText = itemLabel.length;
-            }
-            let percents = +itemValue * 100 / total;
-            if (percents > this.max_percent) {
-                this.max_percent = percents;
-            }
-        }
-        this.maxText += 7;
-        this.maxText *= this.textHeight;
     }
 
     /**После загрузки вьюхи*/

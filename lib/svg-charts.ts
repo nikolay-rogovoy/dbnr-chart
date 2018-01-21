@@ -15,8 +15,6 @@ export class SVGCharts {
                 '#b0d8d9',
                 '#bf768b',
                 '#ded8df',
-                '#f5f6fc',
-                '#c5d1e9',
                 '#c5d1e9',
                 '#5ba1b0',
                 '#acd1d1',
@@ -155,13 +153,10 @@ export class SVGCharts {
     colors: Array<string> = [];
 
     /***/
-    roller = 0;
-
-    /***/
     textHeight = 10;
 
-    constructor(colorTheme = 'good') {
-        this.colorTheme = this.colorThemes.filter(_ => _.name === colorTheme);
+    constructor(public colorThemeName = 'good', public roller = 0) {
+        this.colorTheme = this.colorThemes.filter(_ => _.name === colorThemeName);
         this.colors = this.colorTheme && this.colorTheme.length > 0
             ? this.colorTheme[0].colors
             : this.colorThemes[0].colors;

@@ -1,5 +1,5 @@
-<div style="min-width: 400px; min-height: 400px; max-width: 400px; max-height: 400px;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<div [ngStyle]="{'min-width': width + 'px', 'min-height': height + 'px', 'max-width': width + 'px', 'max-height': height + 'px'}">
+    <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="'0 0 ' + width + ' ' + height" version="1.1" xmlns="http://www.w3.org/2000/svg">
 
         <path *ngFor = "let dataItem of data; let i = index;"
             [attr.d] = "getPath(i)"
