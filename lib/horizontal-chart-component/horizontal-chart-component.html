@@ -1,3 +1,12 @@
-<div>
-    <p>horizontal-chart-component</p>
+<div style="min-width: 400px; min-height: 400px; max-width: 400px; max-height: 400px;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+        <rect *ngFor="let dataItem of data; let i = index;" [attr.x]="getX(i)" [attr.y]="getY(i)" [attr.width]="getWidth(i)" [attr.height]="getHeight(i)"
+            [attr.fill]="getFillColor(i)">
+        </rect>
+
+        <text *ngFor="let dataItem of data; let i = index;" [attr.x]="getTextX(i)" [attr.y]="getTextY(i)" [attr.fill]="'#777'" [attr.class]="'caption'">
+            {{dataItem.label + ", " + percents(i).toFixed(1) + "%"}}
+        </text>
+    </svg>
 </div>
