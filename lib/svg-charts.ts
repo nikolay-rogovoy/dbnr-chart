@@ -168,7 +168,7 @@ export class SVGCharts {
     }
 
     /***/
-    _getTotalSum(data: Array<IChartData>): number {
+    getTotalSum(data: Array<IChartData>): number {
         let sum = 0;
         for (let i = 0; i < data.length; i++) {
             let item = data[i]; //данные в формате: [label, value]
@@ -178,12 +178,17 @@ export class SVGCharts {
         return sum;
     }
 
+    getColor(i){
+        let color = this.colors[(i + this.roller) % this.colors.length];
+        return color;
+    }
+
     /**получение горизонтальной столбцовой диаграммы*/
     getHorBarChart(data: Array<IChartData>, title: string, drawLabels: boolean, barWidth: number, spacer: number): string {
         let text_before = true;
         if (text_before) {
             data.sort((a, b) => b.value - a.value);
-            let total = this._getTotalSum(data);
+            let total = this.getTotalSum(data);
             let maxX = 300;
 
             let res = '';
@@ -234,7 +239,7 @@ export class SVGCharts {
             return res + '</svg>';
         } else {
             data.sort((a, b) => b.value - a.value);
-            let total = this._getTotalSum(data);
+            let total = this.getTotalSum(data);
             let res = '';
             let chartTitle = title ? title : 'Hor-Bar-Chart';
             res += '<text x="0" y="14" fill="#000">' + chartTitle + '</text>';
@@ -286,7 +291,7 @@ export class SVGCharts {
     /***/
     getPieBarChart(data: Array<IChartData>, title: string, drawLabels: boolean, innerRadius: number): string {
         data.sort((a, b) => b.value - a.value);
-        let total = this._getTotalSum(data);
+        let total = this.getTotalSum(data);
         let res = '';
         let chartTitle = title ? title : 'Pie-Chart';
         res += '<text x="0" y="14" fill="#000">' + chartTitle + '</text>';
@@ -327,10 +332,11 @@ export class SVGCharts {
             let percents = (itemValue * 100 / total).toFixed(1).toString();
             ex = +(Math.cos((360 * phi) * Math.PI / 180) * outerRadius + cx).toFixed(4);
             ey = maxY - +(Math.sin((360 * phi) * Math.PI / 180) * outerRadius + cy).toFixed(4);
+            
             exi = +(Math.cos((360 * phi) * Math.PI / 180) * innerRadius + cx).toFixed(4);
             eyi = maxY - +(Math.sin((360 * phi) * Math.PI / 180) * innerRadius + cy).toFixed(4);
 
-            res += '<path d="M' + sx + ' ' + sy + ' A ' + rx + ' ' + ry + ', 0, 0, 0, ' + ex + ' ' + ey + 'L ' + exi + ' ' + eyi + ' A ' + rxi + ' ' + ryi + ', 0, 0, 1, ' + sxi + ' ' + syi + 'L ' + sx + ' ' + sy + '" fill="' + color + '" />';
+            res +=  '<path d="M' + sx + ' ' + sy + ' A ' + rx + ' ' + ry + ', 0, 0, 0, ' + ex + ' ' + ey + 'L ' + exi + ' ' + eyi + ' A ' + rxi + ' ' + ryi + ', 0, 0, 1, ' + sxi + ' ' + syi + 'L ' + sx + ' ' + sy + '" fill="' + color + '" />';
             let tx = +(Math.cos((360 * phi_text) * Math.PI / 180) * outerRadius * 0.7 + cx).toFixed(4);
             let ty = maxY - +(Math.sin((360 * phi_text) * Math.PI / 180) * outerRadius * 0.7 + cy).toFixed(4);
             res += '<text x="' + ((tx - this.textHeight * percents.length / 2)) + '" y="' + (ty) + '" fill="#FFF" class="caption">' + percents + '%</text>';
@@ -354,7 +360,7 @@ export class SVGCharts {
             console.log(data[i].value);
         }
         /**/
-        let total = this._getTotalSum(data);
+        let total = this.getTotalSum(data);
         let maxX = 300;
 
         let res = '';
