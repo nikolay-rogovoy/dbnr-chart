@@ -1,0 +1,17 @@
+<div [ngStyle]="{'min-width': width + 'px', 'min-height': height + 'px', 'max-width': width + 'px', 'max-height': height + 'px'}">
+    <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="'0 0 ' + width + ' ' + height" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+        <path *ngFor = "let dataItem of data; let i = index;"
+            [attr.d] = "getPath(i)"
+            [attr.fill] = "getFillColor(i)">
+        </path>
+
+        <text *ngFor="let dataItem of data; let i = index;" 
+            [attr.x]="getTextX(i)"
+            [attr.y]="getTextY(i)"
+            [attr.fill]="'#FFF'"
+            [attr.class]="'caption'">
+                {{percents(i).toFixed(1) + "%"}}
+        </text>
+    </svg>
+</div>

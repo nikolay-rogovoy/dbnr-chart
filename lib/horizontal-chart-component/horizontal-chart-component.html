@@ -1,0 +1,12 @@
+<div [ngStyle]="{'min-width': width + 'px', 'min-height': height + 'px', 'max-width': width + 'px', 'max-height': height + 'px'}">
+    <svg xmlns="http://www.w3.org/2000/svg" [attr.viewBox]="'0 0 ' + width + ' ' + height" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+        <rect *ngFor="let dataItem of data; let i = index;" [attr.x]="getX(i)" [attr.y]="getY(i)" [attr.width]="getWidth(i)" [attr.height]="getHeight(i)"
+            [attr.fill]="getFillColor(i)">
+        </rect>
+
+        <text *ngFor="let dataItem of data; let i = index;" [attr.x]="getTextX(i)" [attr.y]="getTextY(i)" [attr.fill]="'#000'" [attr.class]="'caption'">
+            {{getText(i)}}
+        </text>
+    </svg>
+</div>
