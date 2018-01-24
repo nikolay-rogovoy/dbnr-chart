@@ -33,7 +33,7 @@ export class FunnelChartComponent implements  OnInit, AfterViewChecked {
     barWidth = 30;
     spacer = 2;
 
-    textHeight = 10;
+    //textHeight = 10;
     maxText = 0;
     maxY = this.data.length * (this.barWidth + this.spacer);
 
@@ -89,35 +89,18 @@ export class FunnelChartComponent implements  OnInit, AfterViewChecked {
 
     /** Получение X координаты точки начала строки */
     getTextX(i){
-        return (this.width / 2) - ((this.getText(i).length) * 8 / 2);
+        return (this.width / 2);// - ((this.getText(i).length) * 8 / 2);
     }
 
     /** Получение Y координаты точки начала строки */
     getTextY(i){
-        let y = (this.getY(i) + this.barWidth / 2 + this.textHeight/2);
+        let y = (this.getY(i) + this.barWidth / 2 /*+ this.textHeight/2*/);
         return y;
     }
 
     /**Инит компонента*/
     ngOnInit() {
-        // this.data = this.data.sort((a, b) => b.value - a.value);
-        //
-        // let total = this.total;
-        //
-        // for (let i = 0; i < this.data.length; i++) {
-        //     let item = this.data[i]; //данные в формате: [label, value]
-        //     let itemValue = +item.value;
-        //     let itemLabel = item.label;
-        //     // if (itemLabel.length > this.maxText) {
-        //     //     this.maxText = itemLabel.length;
-        //     // }
-        //     let percents = +itemValue * 100 / total;
-        //     if (percents > this.max_percent) {
-        //         this.max_percent = percents;
-        //     }
-        // }
-        // this.maxText += 7;
-        // this.maxText *= this.textHeight;
+
     }
 
     /**После загрузки вьюхи*/

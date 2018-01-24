@@ -13,7 +13,10 @@
             [attr.x]="getTextX(i)"
             [attr.y]="getTextY(i)"
             [attr.fill]="'#000'"
-            [attr.class]="'caption'">
+            [attr.class]="'caption'"
+            id="text-{{i}}"
+            text-anchor="middle"
+            alignment-baseline="central">
                 {{getText(i)}}
         </text>
     </svg>
