@@ -10,7 +10,10 @@
             [attr.x]="getTextX(i)"
             [attr.y]="getTextY(i)"
             [attr.fill]="'#FFF'"
-            [attr.class]="'caption'">
+            [attr.class]="'caption'"
+            id="text-{{i}}"
+            text-anchor="middle"
+            alignment-baseline="central">
                 {{percents(i).toFixed(1) + "%"}}
         </text>
     </svg>

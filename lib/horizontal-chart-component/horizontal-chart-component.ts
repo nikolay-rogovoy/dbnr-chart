@@ -32,7 +32,7 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
     barWidth = 30;
     spacer = 2;
 
-    textHeight = 10;
+    //textHeight = 10;
     maxText = 0;
     maxY = this.data.length * (this.barWidth + this.spacer);
 
@@ -87,12 +87,12 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
 
     /** Получение X координаты точки начала строки */
     getTextX(i) {
-        return 0;
+        return 10;
     }
 
     /** Получение Y координаты точки начала строки */
     getTextY(i) {
-        let y = (this.getY(i) + this.barWidth / 2 + this.textHeight / 2);
+        let y = (this.getY(i) + this.barWidth / 2/* + this.textHeight / 2*/);
         return y;
     }
 

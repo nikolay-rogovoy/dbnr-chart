@@ -45,7 +45,7 @@ export class PieChartComponent implements  OnInit, AfterViewChecked {
         return 33 * this.outerRadius / 100;
     }
 
-    textWidth = 9;
+    //textWidth = 9;
 
     /***/
     constructor() {
@@ -91,7 +91,7 @@ export class PieChartComponent implements  OnInit, AfterViewChecked {
     getTextX(i){
         let phi_text = this.phi_text(i);
         let tx = +(Math.cos(360 * phi_text * Math.PI / 180) * this.outerRadius * 0.7 + this.cx).toFixed(4);
-        return tx - this.textWidth * this.percents(i).toFixed(1).length / 2;
+        return tx; // - this.textWidth * this.percents(i).toFixed(1).length / 2;
     }
 
     /** Получение ординаты расположения очередного элемента текста */
