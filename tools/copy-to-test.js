@@ -7,7 +7,7 @@ ncp.limit = 16;
 
 (function copy() {
     let path = './dist/';
-    let destination = '../at/node_modules/dbnr-chart/';
+    let destination = '../wd/node_modules/dbnr-chart/';
     ncp(path, destination, function (err) {
         if (err) {
             return console.error(err);

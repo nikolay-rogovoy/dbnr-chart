@@ -1,6 +1,6 @@
 {
     "name": "dbnr-chart",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "dbnr-chart",
     "main": "dbnr-chart.umd.js",
     "jsnext:main": "dbnr-chart.esm.js",
