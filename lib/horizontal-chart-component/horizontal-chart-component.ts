@@ -20,8 +20,11 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
     /***/
     charts: SVGCharts = new SVGCharts('good', 0);
 
-    /** */
+    /** Сумма всех показателей*/
     get total() { return this.charts.getTotalSum(this.data); }
+
+    /** Максимальное значение в выборке*/
+    get max() { return this.charts.getMaxValue(this.data); }
 
     @Input()
     width = 300;
@@ -32,8 +35,6 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
     barWidth = 30;
     spacer = 2;
 
-    //textHeight = 10;
-    maxText = 0;
     maxY = this.data.length * (this.barWidth + this.spacer);
 
     max_percent = 0;
@@ -44,7 +45,7 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
 
     /***/
     getText(i) {
-        return this.data[i].label + ", " + this.data[i].value;
+        return this.data[i].value + ': ' + this.data[i].label;
     }
 
     /** Получение процентного соотношения очередного элемента */
@@ -55,10 +56,9 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
         return 0;
     }
 
-    /** Получение X координы начала прямоугольника */
+    /** Получение Y координы начала прямоугольника */
     getX(i) {
-        return this.maxText;
-        
+        return 0;
     }
 
     /** Получение Y координы начала прямоугольника */
@@ -69,9 +69,7 @@ export class HorizontalChartComponent implements  OnInit, AfterViewChecked {
 
     /** Получение ширины прямоугольника */
     getWidth(i) {
-        let scale = (this.width - this.maxText) / ((this.width - this.maxText) * this.data[0].value / this.total);
-        let w = (this.width - this.maxText) * this.percents(i) / 100 * scale;
-        return w;
+        return this.width * (this.data[i].value / this.max);
     }
 
     /** Получение высоты прямоугольника */

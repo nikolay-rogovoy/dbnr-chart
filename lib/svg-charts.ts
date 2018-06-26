@@ -173,21 +173,34 @@ export class SVGCharts {
         return sum;
     }
 
+    /***/
+    getMaxValue(data: Array<IChartData>): number {
+        let max = 0;
+        for (let i = 0; i < data.length; i++) {
+            let item = data[i]; //данные в формате: [label, value]
+            let itemValue = +item.value;
+            if (itemValue > max) {
+                max = itemValue;
+            }
+        }
+        return max;
+    }    
+
     getColor(i){
         let color = this.colors[(i + this.roller) % this.colors.length];
         return color;
     }
 
-    /**получение горизонтальной столбцовой диаграммы*/
+    /** Получение горизонтальной столбцовой диаграммы */
     getHorBarChart(data: Array<IChartData>, title: string, drawLabels: boolean, barWidth: number, spacer: number): string {
         let text_before = true;
+        let chartTitle = title ? title : 'Hor-Bar-Chart';
         if (text_before) {
             data.sort((a, b) => b.value - a.value);
             let total = this.getTotalSum(data);
             let maxX = 300;
 
             let res = '';
-            let chartTitle = title ? title : 'Fun-Chart';
             res += '<text x="0" y="14" fill="#000">' + chartTitle + '</text>';
 
             let maxText = 0;
@@ -236,7 +249,6 @@ export class SVGCharts {
             data.sort((a, b) => b.value - a.value);
             let total = this.getTotalSum(data);
             let res = '';
-            let chartTitle = title ? title : 'Hor-Bar-Chart';
             res += '<text x="0" y="14" fill="#000">' + chartTitle + '</text>';
 
             let maxX = 300;
@@ -283,7 +295,7 @@ export class SVGCharts {
         }
     }
 
-    /***/
+    /** Пай чарт */
     getPieBarChart(data: Array<IChartData>, title: string, drawLabels: boolean, innerRadius: number): string {
         data.sort((a, b) => b.value - a.value);
         let total = this.getTotalSum(data);
